@@ -11,6 +11,8 @@ setGravity(800);
 // --- Load Assets ---
 // For Day 1, we only need the player's sprite.
 loadSprite("apple", "https://kaboomjs.com/sprites/apple.png");
+// Enemy
+loadSprite("enemy", "https://kaboomjs.com/sprites/gigagantrum.png");
 
 
 // --- Main Game Scene ---
@@ -53,6 +55,35 @@ scene("main", () => {
         "player",
     ]);
 
+    // Enemy patrol
+    function patrol(){
+        return{
+            id:"patrol",
+            require: ["pos", "area"],
+            dir:-1,
+            update(){
+                this.move(60*this.dir,0);
+            },
+            // collide --> flip enemy
+            add(){
+                this.onCollide((obj, col) =>{
+                    if(col.isLeft() || col.isRight()){
+                        this.dir=-this.dir;
+                    }
+                });
+            },
+        };
+    }
+
+    //Add enemy to the scene
+    const enemy = add([
+        sprite("enemy"),
+        pos(600,200),//enmy start pos
+        area(),
+        body(),
+        patrol(),
+        "enemy"
+    ]);
     // --- Player Controls & Interactions ---
     onKeyDown("left", () => {
         player.move(-200, 0);
@@ -67,8 +98,27 @@ scene("main", () => {
             player.jump(650);
         }
     });
-});
 
+//Collision DEtection
+    player.onCollide("enemy",(enemy,col)=>{
+        if(col.isBottom){
+            destroy(enemy);
+            player.jump(300);
+        }else{
+            destroy(player);
+            go("lose");
+
+        }
+    });
+})
+// game over scene
+scene("lose",()=>{
+    add([
+        text("game Over"),
+        pos(center()),
+        anchor("center"),
+    ])
+});
 // Start the game
 go("main");
 
