@@ -101,7 +101,7 @@ scene("main", () => {
 
 //Collision DEtection
     player.onCollide("enemy",(enemy,col)=>{
-        if(col.isBottom){
+        if(col.isBottom()){
             destroy(enemy);
             player.jump(300);
         }else{
@@ -114,7 +114,7 @@ scene("main", () => {
 // game over scene
 scene("lose",()=>{
     add([
-        text("game Over"),
+        text("Game Over"),
         pos(center()),
         anchor("center"),
     ])
