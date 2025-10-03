@@ -127,7 +127,7 @@ scene("main", ({ level } = { level: 0 }) => {
     // --- Player Controls & Interactions ---
     onKeyDown("left", () => { player.move(-200, 0); });
     onKeyDown("right", () => { player.move(200, 0); });
-    onKeyPress("space", () => { if (player.isGrounded()) { player.jump(500); } });
+    onKeyPress("up", () => { if (player.isGrounded()) { player.jump(500); } });
 
     // Coin collecting logic
     player.onCollide("coin", (coin)=>{
