@@ -2,16 +2,16 @@
 kaboom({
     width: 950,
     height: 600,
-    background: [0, 100, 200],
+    background: [20, 50, 100],
 });
 
 // Set the global gravity value for all physics objects.
 setGravity(800);
 
 // --- Load Assets ---
-loadSprite("apple", "https://kaboomjs.com/sprites/apple.png");
+loadSprite("apple", "https://kaboomjs.com/sprites/mark.png");
 loadSprite("enemy", "https://kaboomjs.com/sprites/gigagantrum.png");
-loadSprite("coin", "https://kaboomjs.com/sprites/coin.png");
+loadSprite("coin", "https://kaboomjs.com/sprites/apple.png");
 loadSprite("door", "https://kaboomjs.com/sprites/door.png");
 
 // --- Define Custom Components ---
@@ -41,7 +41,7 @@ scene("main", ({ level } = { level: 0 }) => {
     // Array of all level layouts
     const LEVELS = [
         [
-            "   $    $    $     ",
+            "   $    $    $      ",
             "                    ",
             "    =         =   D ",
             "                    ",
@@ -57,6 +57,17 @@ scene("main", ({ level } = { level: 0 }) => {
             "     ^           ^  ",
             "      =      =    D ",
             "====================",
+        ],
+        [
+            " $                 D",
+            "     ===============",
+            "                   =",
+            "    =   ^    ^     =",
+            "    =               ",
+            "    ==== $=== $===  ",
+            "        ==   ==   = ",
+            "                    ",
+            "====================",
         ]
     ];
 
@@ -70,7 +81,7 @@ scene("main", ({ level } = { level: 0 }) => {
             " ": () => [],
             "=": () => [
                 rect(47, 47),
-                color(0, 200, 0),
+                color(150, 100, 50),
                 area(),
                 body({ isStatic: true }),
                 "platform",
@@ -116,7 +127,7 @@ scene("main", ({ level } = { level: 0 }) => {
     // --- Player Controls & Interactions ---
     onKeyDown("left", () => { player.move(-200, 0); });
     onKeyDown("right", () => { player.move(200, 0); });
-    onKeyPress("space", () => { if (player.isGrounded()) { player.jump(650); } });
+    onKeyPress("space", () => { if (player.isGrounded()) { player.jump(500); } });
 
     // Coin collecting logic
     player.onCollide("coin", (coin)=>{
